@@ -2,11 +2,37 @@ import { Logout, Settings } from "@mui/icons-material";
 import { ListItemIcon, Menu, MenuItem } from "@mui/material";
 import React from "react";
 import { useValue } from "../../context/ContextProvider";
+import useCheckToken from "../hooks/useCheckToken";
 
 const UserMenu = ({ anchorUserMenu, setAnchorUserMenu, }) => {
-    const { dispatch } = useValue();
+    useCheckToken();
+    const { dispatch, state: { currentUser }
+    } = useValue();
     const handleCloseUserMenu = () => {
         setAnchorUserMenu(null);
+    };
+
+    const testAuthorization = async () => {
+        const url = process.env.REACT_APP_GOOGLE_CLIENT_SERVER + '/location';
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    authorization: `Bearer ${currentUser.token}t`
+                }
+            })
+            const data = await response.json();
+            console.log(data);
+            if (!data.success) {
+                if (response.status === 401) dispatch({ type: 'UPDATE_USER', payload: null });
+                throw new Error(data.message);
+            }
+
+        } catch (error) {
+            dispatch({ type: 'UPDATE_ALERT', payload: { open: true, severity: 'error', message: error.message } });
+            console.log(error);
+        }
     };
 
     return (
@@ -15,7 +41,7 @@ const UserMenu = ({ anchorUserMenu, setAnchorUserMenu, }) => {
             open={Boolean(anchorUserMenu)}
             onClose={handleCloseUserMenu}
             onClick={handleCloseUserMenu}>
-            <MenuItem >
+            <MenuItem onClick={testAuthorization}>
                 <ListItemIcon>
                     <Settings font-size="small" />
                 </ListItemIcon>
@@ -23,7 +49,7 @@ const UserMenu = ({ anchorUserMenu, setAnchorUserMenu, }) => {
             </MenuItem>
             <MenuItem >
                 <ListItemIcon onClick={() => dispatch({ type: "UPDATE_USER", payload: null })}>
-                    <Logout font-size="small" />
+                    <Logout fontSize="small" />
                 </ListItemIcon>
                 Log out
             </MenuItem>
