@@ -5,6 +5,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useValue } from "../../context/ContextProvider";
 import UserPassword from "./UserPassword";
 import GoogleLogin from "./GoogleLogin";
+import { register } from "../../actions/user";
 
 const Login = () => {
     const { state: { openLogin }, dispatch } = useValue();
@@ -23,16 +24,27 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         //test notification 
-        const passwordRef = password.current.value;
-        const confirmRef = confirmPassword.current.value;
-        if (passwordRef !== confirmRef) {
-            dispatch({ type: 'UPDATE_ALERT', payload: { open: true, severity: 'error', message: 'Passwords are not the same' } })
-        };
-        //test Loading
-        dispatch({ type: 'START_LOADING' });
-        setTimeout(() => {
-            dispatch({ type: 'END_LOADING' });
-        }, 6000)
+        // const passwordRef = password.current.value;
+        // const confirmRef = confirmPassword.current.value;
+        // if (passwordRef !== confirmRef) {
+        //     dispatch({ type: 'UPDATE_ALERT', payload: { open: true, severity: 'error', message: 'Passwords are not the same' } })
+        // };
+        // //test Loading
+        // dispatch({ type: 'START_LOADING' });
+        // setTimeout(() => {
+        //     dispatch({ type: 'END_LOADING' });
+        // }, 6000)
+
+        const emailSubmit = email.current.value;
+        const passwordSubmit = password.current.value;
+        // send the login request if it is not registered and return 
+        const nameSubmit = name.current.value;
+        const confirmPasswordSubmit = confirmPassword.current.value;
+        if (passwordSubmit !== confirmPasswordSubmit)
+            return dispatch({ type: 'UPDATE_ALERT', payload: { open: true, severity: 'error', message: 'Passwords are not the same' } });
+        register({ name: nameSubmit, email: emailSubmit, password: passwordSubmit }, dispatch);
+        console.log(`Login body is ${nameSubmit}, ${emailSubmit}, ${passwordSubmit}, ${confirmPasswordSubmit}`);
+
     };
     useEffect(() => {
         isRegister ? setTitle("Register") : setTitle("Login");
