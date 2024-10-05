@@ -1,11 +1,11 @@
 
 import bcrypt from 'bcryptjs'
 import User from '../models/User.js'
+import jwt from 'jsonwebtoken'
 
 export const register = async (req, res) => {
     try {
         const { name, email, password } = req.body;
-        console.log(`register body is ${req.body}`);
         if (password.length < 8) return res.status(400).json({ success: false, message: 'The password must consist 8 characters' });
         const emailLowerCase = email.toLowerCase();
         const existedUser = await User.findOne({ email: emailLowerCase });
@@ -18,7 +18,7 @@ export const register = async (req, res) => {
         });
         const { _id: id, photoURL } = user;
         const token = jwt.sign({ id, name, photoURL }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(201).json({ success: true, result: { id, name, email: user.email, photoURL, token } });
+        res.status(201).json({ success: true, result: { id, name, email: user.email, photoURL, token }, });
 
     } catch (error) {
         console.log(error);

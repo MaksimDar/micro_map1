@@ -6,6 +6,7 @@ const fetchData = async (
     body = body ? { body: JSON.stringify(body) } : {};
     try {
         const response = await fetch(url, { method, headers, ...body });
+        console.log(`Fetch data ${body}`);
         const data = await response.json();
         if (!data.success) {
             if (response.status === 401)

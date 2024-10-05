@@ -11,11 +11,11 @@ const Login = () => {
     const { state: { openLogin }, dispatch } = useValue();
     const [title, setTitle] = useState('Login');
     const [isRegister, setIsRegister] = useState(false);
-    const name = useRef();
-    const surname = useRef();
-    const email = useRef();
-    const password = useRef();
-    const confirmPassword = useRef();
+    const nameRef = useRef();
+    // const surname = useRef();
+    const emailRef = useRef();
+    const passwordRef = useRef();
+    const confirmPasswordRef = useRef();
 
     const handleClose = () => {
         dispatch({ type: 'CLOSE_LOGIN' });
@@ -23,27 +23,15 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        //test notification 
-        // const passwordRef = password.current.value;
-        // const confirmRef = confirmPassword.current.value;
-        // if (passwordRef !== confirmRef) {
-        //     dispatch({ type: 'UPDATE_ALERT', payload: { open: true, severity: 'error', message: 'Passwords are not the same' } })
-        // };
-        // //test Loading
-        // dispatch({ type: 'START_LOADING' });
-        // setTimeout(() => {
-        //     dispatch({ type: 'END_LOADING' });
-        // }, 6000)
-
-        const emailSubmit = email.current.value;
-        const passwordSubmit = password.current.value;
+        const email = emailRef.current.value;
+        const password = passwordRef.current.value;
         // send the login request if it is not registered and return 
-        const nameSubmit = name.current.value;
-        const confirmPasswordSubmit = confirmPassword.current.value;
-        if (passwordSubmit !== confirmPasswordSubmit)
+        const name = nameRef.current.value;
+        const confirmPassword = confirmPasswordRef.current.value;
+        if (password !== confirmPassword)
             return dispatch({ type: 'UPDATE_ALERT', payload: { open: true, severity: 'error', message: 'Passwords are not the same' } });
-        register({ name: nameSubmit, email: emailSubmit, password: passwordSubmit }, dispatch);
-        console.log(`Login body is ${nameSubmit}, ${emailSubmit}, ${passwordSubmit}, ${confirmPasswordSubmit}`);
+        register({ name, email, password }, dispatch);
+        console.log(`Login body is ${name}, ${email}, ${password}`);
 
     };
     useEffect(() => {
@@ -79,7 +67,7 @@ const Login = () => {
                             label='Name'
                             type='text'
                             fullWidth
-                            inputRef={name}
+                            inputRef={nameRef}
                             inputProps={{ minLength: 2 }}
                             required />
                     }
@@ -91,13 +79,13 @@ const Login = () => {
                         label='Email'
                         type='text'
                         fullWidth
-                        inputRef={email}
+                        inputRef={emailRef}
                         inputProps={{ minLength: 2 }}
                         required />
-                    <UserPassword password={password} />
+                    <UserPassword password={passwordRef} />
                     {isRegister && (
                         <UserPassword
-                            password={confirmPassword}
+                            password={confirmPasswordRef}
                             id='confirmPassword'
                             label='Confirm Password'
                         />
