@@ -5,7 +5,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { useValue } from "../../context/ContextProvider";
 import UserPassword from "./UserPassword";
 import GoogleLogin from "./GoogleLogin";
-import { register } from "../../actions/user";
+import { login, register } from "../../actions/user";
 
 const Login = () => {
     const { state: { openLogin }, dispatch } = useValue();
@@ -25,7 +25,10 @@ const Login = () => {
         event.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
-        // send the login request if it is not registered and return 
+
+        if (!isRegister) {
+            return login({ email, password }, dispatch);
+        };
         const name = nameRef.current.value;
         const confirmPassword = confirmPasswordRef.current.value;
         if (password !== confirmPassword)
