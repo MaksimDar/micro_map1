@@ -21,6 +21,7 @@ const Profile = () => {
         if (file) {
             const photoURL = URL.createObjectURL(file);
             dispatch({ type: 'UPDATE_PROFILE', payload: { ...profile, file, photoURL } });
+            console.log(`${profile.photoURL}, ${profile.name}`);
         }
     };
     return (<Dialog

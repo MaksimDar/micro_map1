@@ -51,6 +51,7 @@ export const updateProfile = async (currentUser, updatedFields, dispatch) => {
 
         };
         const result = await fetchData({ url: url + '/updateProfile', method: 'PATCH', body, token: currentUser.token }, dispatch);
+        console.log("Result from fetchData:", result);
         if (result) {
             dispatch({ type: 'UPDATE_USER', payload: { ...currentUser, ...result } });
             dispatch({ type: 'UPDATE_ALERT', payload: { open: true, severity: 'success', message: 'Your profile has been updated ' }, });

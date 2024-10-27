@@ -9,7 +9,7 @@ const NavBar = () => {
     const { state: { currentUser }, dispatch } = useValue();
     return (
         <AppBar>
-            <Container maxWidth="lg">
+            <Container maxWidth="lg" marginBottom="20px">
                 <Toolbar disableGutters>
                     <Box sx={{ mr: 1 }}>
                         <IconButton size='large' color='inherit'>

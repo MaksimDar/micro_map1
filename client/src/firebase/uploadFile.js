@@ -7,6 +7,7 @@ const uploadFile = (file, filePath) => {
         try {
             await uploadBytes(storageRef, file);
             const url = await getDownloadURL(storageRef);
+            console.log(`${url}`);
             resolve(url);
         } catch (error) {
             reject(error);
