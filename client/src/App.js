@@ -4,6 +4,7 @@ import Login from './components/user/Login';
 import Notification from './components/Notification';
 import Loading from './components/Loading';
 import MapWithGeocoder from './map/Map';
+import MainComponent from './components/MainComponent';
 
 const App = () => {
     return (
@@ -12,7 +13,8 @@ const App = () => {
             <Notification />
             <Login />
             <NavBar />
-            <MapWithGeocoder />
+            {/* <MapWithGeocoder /> */}
+            <MainComponent />
         </>
     );
 }

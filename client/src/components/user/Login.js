@@ -7,12 +7,12 @@ import UserPassword from "./UserPassword";
 import GoogleLogin from "./GoogleLogin";
 import { login, register } from "../../actions/user";
 
+
 const Login = () => {
     const { state: { openLogin }, dispatch } = useValue();
     const [title, setTitle] = useState('Login');
     const [isRegister, setIsRegister] = useState(false);
     const nameRef = useRef();
-    // const surname = useRef();
     const emailRef = useRef();
     const passwordRef = useRef();
     const confirmPasswordRef = useRef();

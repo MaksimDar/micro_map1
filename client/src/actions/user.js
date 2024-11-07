@@ -1,6 +1,6 @@
 import fetchData from "./utils/fetch";
 import { v4 as uuidv4 } from 'uuid';
-import uploadFile from "../firebase/uploadFile";
+import uploadFile from "./firebase/uploadFile";
 
 const url = process.env.REACT_APP_GOOGLE_CLIENT_SERVER + '/user';
 
