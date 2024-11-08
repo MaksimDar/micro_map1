@@ -13,8 +13,6 @@ dotenv.config();
 const port = process.env.PORT || 5001;
 
 const app = express();
-
-const url = 'mongodb+srv://maxdovhusha:qLaqLSGh9YNMYBCY@mobispace.hesfl.mongodb.net/locations';
 const dbName = 'maxdovhusha';
 
 
@@ -30,7 +28,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use('/user', userRouter);
 app.use('/location', locationRouter);
 app.get('/locations', async (req, res) => {
-    const client = new MongoClient(url);
+    const client = new MongoClient(process.env.MONGO_CONNECT);
 
     try {
         await client.connect();
@@ -53,7 +51,7 @@ app.use((req, res) => res.status(404).json({ success: false, message: "Not found
 const startServer = async () => {
     try {
         await mongoose.connect(process.env.MONGO_CONNECT);
-        app.listen(port, () => console.log(`Server is listening on port ${port}`));
+        app.listen(port, '0.0.0.0', () => console.log(`Server is listening on port ${port}`));
 
     } catch (error) {
         console.log(error);
