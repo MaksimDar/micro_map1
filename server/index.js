@@ -17,7 +17,7 @@ const dbName = 'maxdovhusha';
 
 
 app.use(cors({
-    origin: process.env.CLIENT_URL,
+    origin: [process.env.CLIENT_URL, 'https://imaginative-taiyaki-b18cc3.netlify.app'],
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['X-Requested-With', 'Content-Type', 'Authorization']
 }));

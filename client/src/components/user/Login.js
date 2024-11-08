@@ -66,7 +66,8 @@ const Login = () => {
                             autoFocus
                             margin='normal'
                             variant="standard"  // corrected here
-                            id='name'
+                            // id='name'
+                            id='register-name'
                             label='Name'
                             type='text'
                             fullWidth
@@ -78,14 +79,14 @@ const Login = () => {
                         autoFocus={!isRegister}
                         margin='normal'
                         variant="standard"  // corrected here
-                        id='email'
+                        id={isRegister ? 'register-email' : 'login-email'}
                         label='Email'
                         type='text'
                         fullWidth
                         inputRef={emailRef}
                         inputProps={{ minLength: 2 }}
                         required />
-                    <UserPassword password={passwordRef} />
+                    <UserPassword password={passwordRef} id={isRegister ? 'register-password' : 'login-password'} />
                     {isRegister && (
                         <UserPassword
                             password={confirmPasswordRef}
