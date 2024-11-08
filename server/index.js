@@ -15,12 +15,28 @@ const port = process.env.PORT || 5001;
 const app = express();
 const dbName = 'maxdovhusha';
 
+const allowedOrigins = [
+    'http://localhost:3000', // Local development
+    'https://imaginative-taiyaki-b18cc3.netlify.app' // Netlify production
+];
 
 app.use(cors({
-    origin: [process.env.CLIENT_URL, 'https://imaginative-taiyaki-b18cc3.netlify.app'],
+    origin: (origin, callback) => {
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Not allowed by CORS'));
+        }
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['X-Requested-With', 'Content-Type', 'Authorization']
 }));
+
+// app.use(cors({
+//     origin: [process.env.CLIENT_URL, 'https://imaginative-taiyaki-b18cc3.netlify.app'],
+//     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
+//     allowedHeaders: ['X-Requested-With', 'Content-Type', 'Authorization']
+// }));
 
 app.options('/location', cors());
 

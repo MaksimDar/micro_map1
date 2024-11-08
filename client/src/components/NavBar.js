@@ -30,7 +30,7 @@ const NavBar = () => {
                         noWrap
                         sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
                     >
-                        MOBIMAPA!
+                        MOBIMAP!
                     </Typography>
                     {!currentUser ? (<Button
                         color="inherit"
