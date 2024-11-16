@@ -16,8 +16,8 @@ const app = express();
 const dbName = 'maxdovhusha';
 
 const allowedOrigins = [
-    'http://localhost:3000', // Local development
-    'https://imaginative-taiyaki-b18cc3.netlify.app' // Netlify production
+    process.env.CLIENT_UR, // Local development
+    process.env.NETLIFY_URL // Netlify production
 ];
 
 app.use(cors({

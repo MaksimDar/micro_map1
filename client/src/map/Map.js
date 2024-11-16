@@ -16,7 +16,8 @@ export default function MapWithGeocoder() {
     useEffect(() => {
         const fetchLocations = async () => {
             try {
-                const response = await fetch('http://localhost:5001/locations');
+                // const response = await fetch('http://localhost:5001/locations');
+                const response = await fetch('https://micro-map1.onrender.com/locations');
                 const data = await response.json();
                 setLocations(data);
             } catch (error) {
@@ -40,18 +41,38 @@ export default function MapWithGeocoder() {
         map.on("load", () => {
             setMapLoaded(true);
 
+            // locations.forEach((location) => {
+            //     const marker = new mapboxgl.Marker()
+            //         .setLngLat(location.coordinates)
+            //         .addTo(map);
+
+            //     const popup = new mapboxgl.Popup({ offset: 25 })
+            //         .setHTML(`
+            //             <h3>${location.name}</h3>
+            //             <p><a href="${location.streetViewLink}" target="_blank">View in ${location.name}</a></p>
+            //         `);
+
+            //     marker.setPopup(popup);
+            // });
+
             locations.forEach((location) => {
-                const marker = new mapboxgl.Marker()
-                    .setLngLat(location.coordinates)
-                    .addTo(map);
+                const [lat, lng] = location.coordinates.split(',').map(Number);
 
-                const popup = new mapboxgl.Popup({ offset: 25 })
-                    .setHTML(`
-                        <h3>${location.name}</h3>
-                        <p><a href="${location.streetViewLink}" target="_blank">View in ${location.name}</a></p>
-                    `);
+                if (!isNaN(lat) && !isNaN(lng)) {
+                    const marker = new mapboxgl.Marker()
+                        .setLngLat([lng, lat])
+                        .addTo(map);
 
-                marker.setPopup(popup);
+                    const popup = new mapboxgl.Popup({ offset: 25 })
+                        .setHTML(`
+                            <h3>${location.name}</h3>
+                            <p><a href="${location.streetViewLink}" target="_blank">View in ${location.name}</a></p>
+                        `);
+
+                    marker.setPopup(popup);
+                } else {
+                    console.error(`Invalid coordinates for location: ${location.name}`);
+                }
             });
         });
 
