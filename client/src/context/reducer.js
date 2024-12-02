@@ -20,7 +20,7 @@ const reducer = (state, action) => {
                     name: action.payload.name, // Update name
                     photoURL: action.payload.photoURL, // Update photo if changed
                 },
-            }
+            };
         case 'START_LOADING':
             return { ...state, loading: true }
         case 'END_LOADING':
