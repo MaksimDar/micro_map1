@@ -64,6 +64,7 @@ app.get('/locations', async (req, res) => {
 app.get('/', (req, res) => res.json({ message: 'Welcome to our API' }));
 app.use((req, res) => res.status(404).json({ success: false, message: "Not found" }));
 
+
 const startServer = async () => {
     try {
         await mongoose.connect(process.env.MONGO_CONNECT);

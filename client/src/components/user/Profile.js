@@ -8,10 +8,23 @@ import { updateProfile } from "../../actions/user";
 const Profile = () => {
     const { state: { profile, currentUser }, dispatch } = useValue();
     const nameRef = useRef();
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const name = nameRef.current.value;
-        updateProfile(currentUser, { name, file: profile.file }, dispatch);
+
+        try {
+            await updateProfile(currentUser, { name, file: profile.file }, dispatch);
+
+            dispatch({
+                type: 'UPDATE_PROFILE',
+                payload: { ...profile, name: profile.name },
+            });
+
+            console.log("Profile updated successfully!");
+        } catch (error) {
+            console.error("Failed to update profile:", error);
+        }
     };
     const handleClose = () => {
         dispatch({ type: 'UPDATE_PROFILE', payload: { ...profile, open: false } });
@@ -20,7 +33,7 @@ const Profile = () => {
         const file = e.target.files[0];
         if (file) {
             const photoURL = URL.createObjectURL(file);
-            dispatch({ type: 'UPDATE_PROFILE', payload: { ...profile, file, photoURL } });
+            dispatch({ type: 'UPDATE_PROFILE', payload: { name: profile.name, photoURL: photoURL } });
             console.log(`${profile.photoURL}, ${profile.name}`);
         }
     };

@@ -9,8 +9,18 @@ const reducer = (state, action) => {
             return { ...state, openLogin: false }
         case 'UPDATE_ALERT':
             return { ...state, alert: action.payload }
+        // case 'UPDATE_PROFILE':
+        //     return { ...state, profile: action.payload }
         case 'UPDATE_PROFILE':
-            return { ...state, profile: action.payload }
+            return {
+                ...state,
+                profile: action.payload, // Update profile
+                currentUser: {           // Update currentUser with the new data
+                    ...state.currentUser,
+                    name: action.payload.name, // Update name
+                    photoURL: action.payload.photoURL, // Update photo if changed
+                },
+            }
         case 'START_LOADING':
             return { ...state, loading: true }
         case 'END_LOADING':

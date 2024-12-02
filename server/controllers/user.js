@@ -38,10 +38,34 @@ export const login = tryCatch(async (req, res) => {
 
 });
 
-export const updateProfile = tryCatch(async (req, res) => {
-    const updatedUser = await User.findByIdAndUpdate(req.user.id, req.user.body, { new: true });
-    const { _id: id, name, photoURL } = updatedUser;
+// export const updateProfile = tryCatch(async (req, res) => {
 
-    const token = jwt.sign({ id, photoURL }, process.env.JWT_SECRET, { expiresIn: '1h' });
-    res.status(200).json({ success: true, result: { name, photoURL, token } });
-})
+//     const updatedUser = await User.findByIdAndUpdate(req.user.id, req.user.body, { new: true });
+//     const { _id: id, name, photoURL } = updatedUser;
+
+//     const token = jwt.sign({ id, photoURL }, process.env.JWT_SECRET, { expiresIn: '1h' });
+//     res.status(200).json({ success: true, result: { name, photoURL, token } });
+// })
+
+export const updateProfile = tryCatch(async (req, res) => {
+    const { name, photoURL } = req.body;
+
+    const updatedUser = await User.findByIdAndUpdate(
+        req.user.id,
+        { name, photoURL },
+        { new: true }
+    );
+
+    if (!updatedUser) {
+        return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    const { _id: id, name: updatedName, photoURL: updatedPhotoURL } = updatedUser;
+    const token = jwt.sign({ id, name: updatedName, photoURL: updatedPhotoURL }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+    res.status(200).json({
+        success: true,
+        result: { name: updatedName, photoURL: updatedPhotoURL, token }
+    });
+});
+
