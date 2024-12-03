@@ -20,6 +20,12 @@ const reducer = (state, action) => {
                     name: action.payload.name, // Update name
                     photoURL: action.payload.photoURL, // Update photo if changed
                 },
+                open: false
+            };
+        case 'SET_PROFILE':
+            return {
+                ...state,
+                profile: action.payload,
             };
         case 'START_LOADING':
             return { ...state, loading: true }

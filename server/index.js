@@ -1,5 +1,3 @@
-
-
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
@@ -16,8 +14,8 @@ const app = express();
 const dbName = 'maxdovhusha';
 
 const allowedOrigins = [
-    process.env.CLIENT_UR, // Local development
-    process.env.NETLIFY_URL // Netlify production
+    process.env.CLIENT_UR,
+    process.env.NETLIFY_URL
 ];
 
 app.use(cors({

@@ -1,10 +1,14 @@
 import React from "react";
 import { AppBar, Box, Button, Container, IconButton, Toolbar, Typography } from "@mui/material";
 import { Menu, Lock } from "@mui/icons-material";
-// import photoURL from '../photos/jon.jpg';
+
 import { useValue } from "../context/ContextProvider";
 import UserIcons from "./user/UserIcons";
-// const user = { name: 'jon', photoURL };
+
+const handleClick = () => {
+    console.log('Hello Menu!');
+};
+
 const NavBar = () => {
     const { state: { currentUser }, dispatch } = useValue();
     return (
@@ -12,7 +16,7 @@ const NavBar = () => {
             <Container maxWidth="lg" >
                 <Toolbar disableGutters>
                     <Box sx={{ mr: 1 }}>
-                        <IconButton size='large' color='inherit'>
+                        <IconButton size='large' color='inherit' onClick={handleClick}>
                             <Menu />
                         </IconButton>
                     </Box>
