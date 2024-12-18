@@ -42,14 +42,15 @@ export default function MapWithGeocoder() {
             setMapLoaded(true);
 
             locations.forEach((location) => {
+                const { longitude, latitude, name, streetViewLink } = location;
                 const marker = new mapboxgl.Marker()
-                    .setLngLat(location.coordinates)
+                    .setLngLat([longitude, latitude])
                     .addTo(map);
 
                 const popup = new mapboxgl.Popup({ offset: 25 })
                     .setHTML(`
                         <h3>${location.name}</h3>
-                        <p><a href="${location.streetViewLink}" target="_blank">View in ${location.name}</a></p>
+                        <p><a href="${streetViewLink}" target="_blank">View in ${name}</a></p>
                     `);
 
                 marker.setPopup(popup);
