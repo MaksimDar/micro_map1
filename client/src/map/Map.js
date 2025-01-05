@@ -180,7 +180,7 @@ export default function MapWithGeocoder() {
                 `);
 
             marker.setPopup(popup);
-            markersRef.current.push(marker); // Track the marker
+            markersRef.current.push(marker);
         });
     };
 
